@@ -291,7 +291,7 @@ $(window).on("load", function () {
       }
 
       container
-        .append('<p class="chapter-header">' + c["Resource"] + "</p>")
+        .append('<p class="chapter-header">' + c["School"] + "</p>")
         .append(media && c["Media Link"] ? mediaContainer : "")
         .append(media ? source : "")
         .append('<h2 class="translate-title"> Descripción </h2>')
