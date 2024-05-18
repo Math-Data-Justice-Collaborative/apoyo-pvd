@@ -25,8 +25,10 @@ body {
 #contents {
   padding: 0;
   width: 100%;
-  margin-top: 0; /*Adjust if Title header needs more space */
-  height: 100%; /* Adjust to fit max Description length, one setting for all; alternative is 100% */
+  margin-top: 0;
+  /*Adjust if Title header needs more space */
+  height: 100%;
+  /* Adjust to fit max Description length, one setting for all; alternative is 100% */
   overflow-y: scroll;
   overflow-x: hidden;
 }
@@ -87,10 +89,12 @@ body {
   max-height: 200px;
   width: 100%;
 }
+
 .translate-title {
   margin-top: 1.5rem;
   font-style: italic;
 }
+
 .audio-container {
   margin: 0;
   margin-bottom: 5px;
@@ -108,11 +112,26 @@ body {
   text-decoration: underline;
 }
 
+.chapter-address {
+  display: block;
+  text-align: center;
+  font-size: 1em;
+  padding: 0 2px;
+}
+
+.chapter-phone {
+  display: block;
+  text-align: center;
+  font-size: 1em;
+  padding: 0 2px;
+}
+
 .source {
   font-size: 9pt;
   font-style: italic;
   color: gray;
 }
+
 a.source:visited {
   color: grey;
 }
@@ -196,9 +215,11 @@ h2 {
   align-items: center;
   font-weight: 900;
 }
+
 .listen:hover {
   background: white;
 }
+
 .stop {
   margin: 0.5rem 0;
   z-index: 999999999;
@@ -207,4 +228,85 @@ h2 {
   text-decoration: underline;
   font-weight: 600;
   color: red;
+}
+
+
+#search-bar {
+  position: fixed;
+  width: auto;
+  z-index: 1000;
+  padding: 5px 0;
+  /* Adjust padding as needed */
+  display: flex;
+  /* Use Flexbox to align items horizontally */
+  justify-content: flex-start;
+  /* Align items to the left */
+  align-items: center;
+  /* Center items vertically */
+  left: 0;
+  /* Align to the left side */
+  top: 5px;
+  /* Add some top margin */
+}
+
+.search-bar {
+  position: relative;
+  display: flex;
+  /* Use Flexbox to align items horizontally */
+  align-items: center;
+  /* Ensure elements are centered vertically */
+  background-color: transparent;
+  /* Make background transparent */
+  margin: 0;
+  /* Remove margin */
+  padding: 0;
+  /* Remove padding */
+}
+
+#box {
+  display: flex;
+  /* Use Flexbox to align items horizontally */
+  align-items: center;
+  /* Ensure elements are centered vertically */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  /* Add box-shadow */
+}
+
+#box input[type="text"] {
+  flex: 1;
+  /* Take up remaining space */
+  padding: 10px 15px;
+  /* Adjust padding for height and to reduce space */
+  font-size: 18px;
+  /* Increased font size */
+  border: none;
+  /* Remove all borders */
+  border-bottom: 2px solid #444;
+  /* Add bottom border */
+  background-color: rgba(255, 255, 255, 0.8);
+  /* Slightly transparent background */
+  color: #444;
+  /* Text color */
+  border-radius: 4px 0 0 4px;
+  /* Rounded corners on the left side */
+}
+
+#magnifying {
+  display: flex;
+  align-items: center;
+  padding: 0 5px;
+  cursor: pointer;
+
+}
+
+#magnifying .fa-search {
+  color: #2207ec;
+  /* Darker color for better visibility */
+  font-size: 24px;
+  /* Increased icon size */
+}
+
+#magnifying .fa-search:hover {
+  color: #000;
+  /* Change color on hover for better feedback */
 }

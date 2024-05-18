@@ -1,4 +1,38 @@
 $(window).on("load", function () {
+  //Trying to focus on the first item during scrolling
+  // function isElementInView(element) {
+  //   var rect = element.getBoundingClientRect();
+  //   return (
+  //     rect.top >= 0 &&
+  //     rect.left >= 0 &&
+  //     rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+  //     rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+  //   );
+  // }
+
+  // // Scroll event to update focus based on the first element in view
+  // $(window).on('scroll', function() {
+  //   var found = false;
+  //   $('.chapter-container:visible').each(function() {
+  //     if (isElementInView(this) && !found) {
+  //       $('.chapter-container').removeClass("in-focus").addClass("out-focus");
+  //       $(this).addClass("in-focus").removeClass("out-focus");
+  //       found = true;
+  //     }
+  //   });
+  // });
+
+
+  //Add the search bar
+  $('#search-input').on('keyup', function() {
+    var value = $(this).val().toLowerCase();
+    $('.chapter-container').filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+
+
+
   const descArray = [];
   let msg = new SpeechSynthesisUtterance();
   var documentSettings = {};
@@ -100,6 +134,8 @@ $(window).on("load", function () {
   }
 
   function initMap(options, chapters) {
+
+
     createDocumentSettings(options);
 
     var chapterContainerMargin = 70;
@@ -107,6 +143,7 @@ $(window).on("load", function () {
     document.title = getSetting("_mapTitle");
     $("#header").append("<h1>" + (getSetting("_mapTitle") || "") + "</h1>");
     $("#header").append("<h2>" + (getSetting("_mapSubtitle") || "") + "</h2>");
+
 
     // Add logo
     if (getSetting("_mapLogo")) {
@@ -155,9 +192,14 @@ $(window).on("load", function () {
     var overlay; // URL of the overlay for in-focus chapter
     var geoJsonOverlay;
 
+    // Add search bar
+    // var searchBar = $('<div id="search-bar"><input type="text" id="search-input" placeholder="Search..."></div>');
+    // $("#contents").before(searchBar);
+
+
     for (i in chapters) {
       var c = chapters[i];
-      console.log(i);
+      console.log(chapters);
 
       if (
         !isNaN(parseFloat(c["Latitude"])) &&
@@ -168,16 +210,17 @@ $(window).on("load", function () {
 
         chapterCount += 1;
 
+
         markers.push(
           L.marker([lat, lon], {
             icon: L.ExtraMarkers.icon({
               icon: "fa-number",
-              number:
-                c["Marker"] === "Numbered"
-                  ? chapterCount
-                  : c["Marker"] === "Plain"
-                  ? ""
-                  : c["Marker"],
+              number: chapterCount,
+                // c["Marker"] === "Numbered" Currently just comment this out because not sure how to set it
+                //   ? chapterCount
+                //   : c["Marker"] === "Plain"
+                //   ? ""
+                //   : c["Marker"],
               markerColor: c["Marker Color"] || "blue",
             }),
             opacity: c["Marker"] === "Hidden" ? 0 : 0.9,
@@ -195,43 +238,27 @@ $(window).on("load", function () {
         class: "chapter-container",
       });
 
+      // Media 1
+
       // Add media and credits: YouTube, audio, or image
       var media = null;
       var mediaContainer = null;
+      var sourcename = null;
+      var sourcelink = null;
+      var medialink = null;
+      var media2 = null;
+      var mediaContainer2 = null;
+      var sourcename2 = null;
+      var sourcelink2 = null;
+      var medialink2 = null;
 
-      // Add media source
-      var source = "";
-      if (c["Media Credit Link"]) {
-        source = $("<a>", {
-          text: c["Media Credit"],
-          href: c["Media Credit Link"],
-          target: "_blank",
-          class: "source",
-        });
-      } else {
-        source = $("<div>", {
-          text: c["Media Credit"],
-          class: "source",
-        });
-      }
+      sourcename = "Media Credit"
+      sourcelink = "Media Credit Link"
+      medialink = "Media Link"
 
-      // YouTube
-      if (c["Media Link"] && c["Media Link"].indexOf("youtube.com/") > -1) {
-        media = $("<iframe></iframe>", {
-          src: c["Media Link"],
-          width: "100%",
-          height: "100%",
-          frameborder: "0",
-          allow: "autoplay; encrypted-media",
-          allowfullscreen: "allowfullscreen",
-        });
-
-        mediaContainer = $("<div></div>", {
-          class: "img-container",
-        })
-          .append(media)
-          .after(source);
-      }
+      sourcename2 = "Services Media Credit"
+      sourcelink2 = "Services Media Credit Link"
+      medialink2 = "Media Link 2"
 
       // If not YouTube: either audio or image
       var mediaTypes = {
@@ -245,14 +272,28 @@ $(window).on("load", function () {
         wav: "audio",
       };
 
-      var mediaExt = c["Media Link"]
-        ? c["Media Link"].split(".").pop().toLowerCase()
-        : "";
+      // Begin of adding the FIRST media source that can be either image or video =======================================
+      var source = "";
+      if (c[sourcename]) {
+        source = $("<a>", {
+          text: c[sourcename],
+          href: c[sourcelink],
+          target: "_blank",
+          class: "source",
+        });
+      } else {
+        source = $("<div>", {
+          text: c[sourcename],
+          class: "source",
+        });
+      }
+
+      var mediaExt = c[medialink] ? c[medialink].split(".").pop().toLowerCase() : "";
       var mediaType = mediaTypes[mediaExt] || "img";
 
       if (mediaType) {
         media = $("<" + mediaType + ">", {
-          src: c["Media Link"],
+          src: c[medialink],
           controls: mediaType === "audio" ? "controls" : "",
           alt: c["Chapter"],
         });
@@ -261,8 +302,8 @@ $(window).on("load", function () {
           getSetting("_enableLightbox") === "yes" ? true : false;
         if (enableLightbox && mediaType === "img") {
           var lightboxWrapper = $("<a></a>", {
-            "data-lightbox": c["Media Link"],
-            href: c["Media Link"],
+            "data-lightbox": c[medialink],
+            href: c[medialink],
             "data-title": c["Chapter"],
             "data-alt": c["Chapter"],
           });
@@ -274,7 +315,115 @@ $(window).on("load", function () {
         })
           .append(media)
           .after(source);
+        }
+
+      // YouTube
+      if (c[medialink] && c[medialink].indexOf("youtube.com/") > -1) {
+        var videoId = c[medialink].split('v=')[1];
+        var ampersandPosition = videoId.indexOf('&');
+        if(ampersandPosition != -1) {
+          videoId = videoId.substring(0, ampersandPosition);
+        }
+
+        // Construct the embed URL
+        var embedUrl = "https://www.youtube.com/embed/" + videoId + "/";
+
+        media = $("<iframe></iframe>", {
+          src: embedUrl,
+          width: "100%",
+          height: "100%",
+          frameborder: "0",
+          allow: "autoplay; encrypted-media",
+          allowfullscreen: "allowfullscreen",
+        });
+
+        mediaContainer = $("<div></div>", {
+          class: "img-container",
+        })
+          .append(media)
+          .after(source);
+        }
+
+      // END of adding the FIRST media source that can be either image or video =======================================
+
+
+      // Begin of adding the SECOND media source that can be either image or video =======================================
+      var source2 = "";
+      if (c[sourcename2]) {
+        source2 = $("<a>", {
+          text: c[sourcename2],
+          href: c[sourcelink2],
+          target: "_blank",
+          class: "source",
+        });
+      } else {
+        source2 = $("<div>", {
+          text: c[sourcename2],
+          class: "source",
+        });
       }
+
+      var mediaExt2 = c[medialink2] ? c[medialink2].split(".").pop().toLowerCase() : "";
+      var mediaType2 = mediaTypes[mediaExt2] || "img";
+
+      if (mediaType2) {
+        media2 = $("<" + mediaType2 + ">", {
+          src: c[medialink2],
+          controls: mediaType2 === "audio" ? "controls" : "",
+          alt: c["Chapter"],
+        });
+
+        var enableLightbox =
+          getSetting("_enableLightbox") === "yes" ? true : false;
+        if (enableLightbox && mediaType2 === "img") {
+          var lightboxWrapper = $("<a></a>", {
+            "data-lightbox": c[medialink2],
+            href: c[medialink2],
+            "data-title": c["Chapter"],
+            "data-alt": c["Chapter"],
+          });
+          media2 = lightboxWrapper.append(media2);
+        }
+
+        mediaContainer2 = $("<div></div", {
+          class: mediaType2 + "-container",
+        })
+          .append(media2)
+          .after(source2);
+
+
+      }
+
+      // YouTube
+      if (c[medialink2] && c[medialink2].indexOf("youtube.com/") > -1) {
+
+        console.log("Will this thing display")
+        var videoId = c[medialink2].split('v=')[1];
+        var ampersandPosition = videoId.indexOf('&');
+        if(ampersandPosition != -1) {
+          videoId = videoId.substring(0, ampersandPosition);
+        }
+
+        // Construct the embed URL
+        var embedUrl = "https://www.youtube.com/embed/" + videoId + "/";
+
+        media2 = $("<iframe></iframe>", {
+          src: embedUrl,
+          width: "100%",
+          height: "100%",
+          frameborder: "0",
+          allow: "autoplay; encrypted-media",
+          allowfullscreen: "allowfullscreen",
+        });
+
+        mediaContainer2 = $("<div></div>", {
+          class: "img-container",
+        })
+          .append(media2)
+          .after(source2);
+      }
+      // END of adding the SECOND media source that can be either image or video =======================================
+
       descArray.push(c["Descripcion"]);
 
       function playAudio() {
@@ -290,10 +439,16 @@ $(window).on("load", function () {
         speechSynthesis.speak(msg);
       }
 
+
+      console.log(media && c[medialink] ? mediaContainer: "no","xxxxxxxxxxxxx")
       container
         .append('<p class="chapter-header">' + c["Resource"] + "</p>")
-        .append(media && c["Media Link"] ? mediaContainer : "")
+        .append('<p class="chapter-address">' + c["Address"] + "</p>")
+        .append('<p class="chapter-phone">' + c["Phone Number"] + "</p>")
+        .append(media && c[medialink] ? mediaContainer : "")
         .append(media ? source : "")
+        .append(media2 && c[medialink2] ? mediaContainer2 : "")
+        .append(media2 ? source2 : "")
         .append('<h2 class="translate-title"> Descripción </h2>')
         .append(
           `<button class='listen listen-${i} ' ><span>Escucha</span> <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24"><path d="M6 7l8-5v20l-8-5v-10zm-6 10h4v-10h-4v10zm20.264-13.264l-1.497 1.497c1.847 1.783 2.983 4.157 2.983 6.767 0 2.61-1.135 4.984-2.983 6.766l1.498 1.498c2.305-2.153 3.735-5.055 3.735-8.264s-1.43-6.11-3.736-8.264zm-.489 8.264c0-2.084-.915-3.967-2.384-5.391l-1.503 1.503c1.011 1.049 1.637 2.401 1.637 3.888 0 1.488-.623 2.841-1.634 3.891l1.503 1.503c1.468-1.424 2.381-3.309 2.381-5.394z"/></svg></button>`
@@ -363,7 +518,9 @@ $(window).on("load", function () {
 
           // Remove styling for the old in-focus chapter and
           // add it to the new active chapter
-          $(".chapter-container").removeClass("in-focus").addClass("out-focus");
+
+          $(".chapter-container").removeClass("in-focus")
+          // .addClass("out-focus");
           $("div#container" + i)
             .addClass("in-focus")
             .removeClass("out-focus");
@@ -506,6 +663,7 @@ $(window).on("load", function () {
       });
     }
 
+    //=================== Add markers to the map ================================
     var bounds = [];
     for (i in markers) {
       if (markers[i]) {
