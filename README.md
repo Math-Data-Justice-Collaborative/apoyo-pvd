@@ -3,7 +3,7 @@ https://math-data-justice-collaborative.github.io/edu-pvd/
 
 # Leaflet Storymaps with Google Sheets
 
-This is a storymap of community resources in Providence, Rhode Island, built using the [HandsOnDataViz/leaflet-storymaps-with-google-sheets](https://github.com/HandsOnDataViz/leaflet-storymaps-with-google-sheets) repository.
+This is a storymap of community resources in Providence, Rhode Island, built using the [HandsOnDataViz/leaflet-storymaps-with-google-sheets](https://github.com/HandsOnDataViz/leaflet-storymaps-with-google-sheets) repository. See step-by-step tutorial in [Hands-On Data Visualization](https://HandsOnDataViz.org/leaflet-storymaps-with-google-sheets.html).
 
 ## Build Process
 
@@ -17,21 +17,14 @@ For this file, go to actions menu in the top of the github and then build.
 
 ## Description
 
-Customize your Leaflet story map with linked Google Sheets template and scrolling narrative. Supports images, audio and video embeddings, and Leaflet TileLayer/geojson overlays.
-
 ### Live Links (Replace with your own)
-- Leaflet Map: https://handsondataviz.github.io/leaflet-storymaps-with-google-sheets/
-- Google Sheets Template: https://docs.google.com/spreadsheets/d/1AO6XHL_0JafWZF4KEejkdDNqfuZWUk3SlNlQ6MjlRFM/edit#gid=0
+- Leaflet Map: https://math-data-justice-collaborative.github.io/edu-pvd/ 
 - Our Sheet: Owned by WRWC
-
-### Create Your Own
-See step-by-step tutorial in [Hands-On Data Visualization](https://HandsOnDataViz.org/leaflet-storymaps-with-google-sheets.html).
 
 ### Geocode your address data with Google Sheets add-on
 To geocode (find latitude and longitude coordinates), we recommend installing the free Geocoding by SmartMonkey add-on for Google Sheets. Insert your addresses in place of the samples in the Geocoding Details tab, then use Add-Ons > Geocoding > Geocode Details menu. Learn more in [Hands-On Data Visualization](https://handsondataviz.org/geocode.html).
 
 ### Geocoding
-
 To finalize your map, you need to either:
 - Download each Google Sheets tab as a CSV file and upload into a `csv` subfolder in your GitHub repo.
 - Get your own Google Sheets API Key to insert into `google-doc-url.js`.
