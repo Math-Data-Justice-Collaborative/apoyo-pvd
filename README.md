@@ -1,3 +1,6 @@
+## Website rendered
+https://math-data-justice-collaborative.github.io/edu-pvd/ 
+
 # Leaflet Storymaps with Google Sheets
 
 This is a storymap of community resources in Providence, Rhode Island, built using the [HandsOnDataViz/leaflet-storymaps-with-google-sheets](https://github.com/HandsOnDataViz/leaflet-storymaps-with-google-sheets) repository.
@@ -19,7 +22,7 @@ Customize your Leaflet story map with linked Google Sheets template and scrollin
 ### Live Links (Replace with your own)
 - Leaflet Map: https://handsondataviz.github.io/leaflet-storymaps-with-google-sheets/
 - Google Sheets Template: https://docs.google.com/spreadsheets/d/1AO6XHL_0JafWZF4KEejkdDNqfuZWUk3SlNlQ6MjlRFM/edit#gid=0
-- Our Sheet: [insert your own Google Sheets ID here]
+- Our Sheet: Owned by WRWC
 
 ### Create Your Own
 See step-by-step tutorial in [Hands-On Data Visualization](https://HandsOnDataViz.org/leaflet-storymaps-with-google-sheets.html).
