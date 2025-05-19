@@ -6,29 +6,72 @@ body {
 }
 
 #map {
-  height: 200px;
+  height: 250px;
   width: 100vw;
   position: absolute;
   border-bottom: 3px solid orange;
   top: 0;
   left: 0;
+  z-index: 1;
+}
+
+#title {
+  position: absolute;
+  left: 0;
+  top: 250px;
+  background-color: white;
+  width: 100vw;
+  z-index: 100;
+  margin: 0;
+  padding: 0;
+  visibility: visible;
+  font-weight: bold;
+  font-style: italic;
+  text-align: center;
+  margin-bottom: 0;
+}
+
+#logo {
+  height: 60px;
+  line-height: 0;
+  text-align: center;
+  padding: 0;
+  max-width: 100%;
+  margin: 0;
+  margin-bottom: 0;
+}
+
+#logo img {
+  max-height: 100%;
+  max-width: 100%;
+  vertical-align: middle;
+  margin: 0;
+  padding: 0;
+}
+
+#header {
+  padding: 0;
+  margin: 0;
+  margin-bottom: 0;
+  text-align: center;
+  color: #333;
 }
 
 #narration {
   position: absolute;
-  top: 203px;
+  top: 310px;
   width: 100vw;
-  height: calc(100vh - 203px);
+  height: calc(100vh - 310px);
   z-index: 80;
+  margin: 0;
+  padding: 0;
 }
 
 #contents {
   padding: 0;
   width: 100%;
-  margin-top: 0;
-  /*Adjust if Title header needs more space */
+  margin: 0;
   height: 100%;
-  /* Adjust to fit max Description length, one setting for all; alternative is 100% */
   overflow-y: scroll;
   overflow-x: hidden;
 }
@@ -36,6 +79,7 @@ body {
 #top {
   height: 40px;
   margin: 0;
+  padding: 0;
 }
 
 #space-at-the-bottom {
@@ -45,26 +89,9 @@ body {
   padding-top: 150px;
 }
 
-#title {
-  position: absolute;
-  left: 0;
-  top: 203px;
-  background-color: white;
-  width: 100vw;
-  z-index: 100;
+.chapter-container {
   margin: 0;
   padding: 0;
-  visibility: hidden;
-  font-weight: bold;
-  font-style: italic;
-  text-align: center;
-}
-
-.chapter-container {
-  /* margin + padding = chapterContainerMargin in script.js */
-  /* Important for scrolling! */
-  margin: 50px 0 0 0;
-  padding: 20px 0 0 0;
   text-align: center;
 }
 
@@ -167,27 +194,6 @@ a.source:visited {
   background-position: -72px 0 !important;
 }
 
-/* Storymap logo image above the title */
-#logo {
-  height: 100px;
-  line-height: 30px;
-  text-align: center;
-  padding: 10px;
-  max-width: 100%;
-}
-
-#logo img {
-  max-height: 100%;
-  max-width: 100%;
-  vertical-align: middle;
-}
-
-#header {
-  padding: 5px 0;
-  text-align: center;
-  color: #333;
-}
-
 /* Storymap title & subtitle */
 h1 {
   margin: 0;
@@ -235,78 +241,57 @@ h2 {
   position: fixed;
   width: auto;
   z-index: 1000;
-  padding: 5px 0;
-  /* Adjust padding as needed */
+  padding: 10px;
   display: flex;
-  /* Use Flexbox to align items horizontally */
-  justify-content: flex-start;
-  /* Align items to the left */
+  justify-content: flex-end;
   align-items: center;
-  /* Center items vertically */
-  left: 0;
-  /* Align to the left side */
-  top: 5px;
-  /* Add some top margin */
-}
-
-.search-bar {
-  position: relative;
-  display: flex;
-  /* Use Flexbox to align items horizontally */
-  align-items: center;
-  /* Ensure elements are centered vertically */
-  background-color: transparent;
-  /* Make background transparent */
-  margin: 0;
-  /* Remove margin */
-  padding: 0;
-  /* Remove padding */
+  right: 10px;
+  top: 10px;
 }
 
 #box {
   display: flex;
-  /* Use Flexbox to align items horizontally */
   align-items: center;
-  /* Ensure elements are centered vertically */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  /* Add box-shadow */
+  background-color: white;
+  border-radius: 25px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+#box:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 #box input[type="text"] {
   flex: 1;
-  /* Take up remaining space */
-  padding: 10px 15px;
-  /* Adjust padding for height and to reduce space */
-  font-size: 18px;
-  /* Increased font size */
+  padding: 14px 20px;
+  font-size: 16px;
   border: none;
-  /* Remove all borders */
-  border-bottom: 2px solid #444;
-  /* Add bottom border */
-  background-color: rgba(255, 255, 255, 0.8);
-  /* Slightly transparent background */
-  color: #444;
-  /* Text color */
-  border-radius: 4px 0 0 4px;
-  /* Rounded corners on the left side */
+  background: transparent;
+  color: #333;
+  width: 280px;
+  outline: none;
+}
+
+#box input[type="text"]::placeholder {
+  color: #999;
 }
 
 #magnifying {
   display: flex;
   align-items: center;
-  padding: 0 5px;
+  padding: 0 15px;
   cursor: pointer;
-
+  transition: all 0.3s ease;
 }
 
 #magnifying .fa-search {
-  color: #2207ec;
-  /* Darker color for better visibility */
-  font-size: 24px;
-  /* Increased icon size */
+  color: #666;
+  font-size: 18px;
+  transition: all 0.3s ease;
 }
 
-#magnifying .fa-search:hover {
-  color: #000;
-  /* Change color on hover for better feedback */
+#magnifying:hover .fa-search {
+  color: #2207ec;
+  transform: scale(1.1);
 }
