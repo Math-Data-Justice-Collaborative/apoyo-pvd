@@ -64,11 +64,19 @@
     <div class="loader">Loading...</div>
     <div id="map"></div>
     <div id="search-bar">
+
+      <div id="box">
+        <input type="text" id="search-input" placeholder="Search locations...">
+        <div id="magnifying">
+          <i class="fa fa-search"></i>
+        </div>
+
       <div id="box>">
         <input type="text" id="search-input" placeholder="Search...">
       </div>
       <div id="magnifying">
         <i class="fa fa-search"></i>
+
       </div>
     </div>
 
@@ -80,6 +88,33 @@
         scrollWheelZoom: false,
         zoomControl: false,
         tap: false,
+      });
+
+      // Search functionality
+      document.getElementById('search-input').addEventListener('input', function(e) {
+        const searchTerm = e.target.value.toLowerCase();
+        // Get all markers on the map
+        const markers = document.querySelectorAll('.leaflet-marker-icon');
+        
+        markers.forEach(marker => {
+          const markerTitle = marker.getAttribute('title') || '';
+          if (markerTitle.toLowerCase().includes(searchTerm)) {
+            marker.style.opacity = '1';
+          } else {
+            marker.style.opacity = '0.3';
+          }
+        });
+      });
+
+      // Clear search when clicking the magnifying glass
+      document.getElementById('magnifying').addEventListener('click', function() {
+        const searchInput = document.getElementById('search-input');
+        searchInput.value = '';
+        // Reset all markers to full opacity
+        const markers = document.querySelectorAll('.leaflet-marker-icon');
+        markers.forEach(marker => {
+          marker.style.opacity = '1';
+        });
       });
     </script>
 
